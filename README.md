@@ -1,2 +1,2 @@
 # Gan_CA
-generating cartoon anime
+generating cartoon portrait
