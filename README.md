@@ -1,2 +1,2 @@
 # Gan_CA
-generating cartoon portrait
+generating cartoon portrait using gan
