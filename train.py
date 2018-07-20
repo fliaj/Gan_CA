@@ -112,9 +112,8 @@ for epoch in range(opt.n_epochs):
     for i, (imgs, _) in enumerate(dataloader):
 
         # Adversarial ground truths
-        valid = Variable(Tensor(imgs.size(0), 1).fill_(1.0), requires_grad=False)
-        fake = Variable(Tensor(imgs.size(0), 1).fill_(0.0), requires_grad=False)
-
+        valid = torch.ones([imgs.size(0),1])
+        fake = torch.zeros([imgs.size(0),1])
         # Configure input
         real_imgs = Variable(imgs.type(Tensor))
 
