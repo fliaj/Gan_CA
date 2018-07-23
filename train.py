@@ -101,7 +101,6 @@ dataloader = torch.utils.data.DataLoader(
 optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
 optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
 
-Tensor = torch.FloatTensor.to(device)
 
 # ----------
 #  Training
@@ -114,7 +113,7 @@ for epoch in range(opt.n_epochs):
         valid = torch.ones([imgs.size(0),1])
         fake = torch.zeros([imgs.size(0),1])
         # Configure input
-        real_imgs = Variable(imgs.type(Tensor))
+        real_imgs = torch.from_numpy(imgs).to(device)
 
         # -----------------
         #  Train Generator
@@ -123,7 +122,7 @@ for epoch in range(opt.n_epochs):
         optimizer_G.zero_grad()
 
         # Sample noise as generator input
-        z = Variable(Tensor(np.random.normal(0, 1, (imgs.shape[0], opt.latent_dim))))
+        z = torch.randn(imgs.shape[0], opt.latent_dim)
 
         # Generate a batch of images
         gen_imgs = generator(z)
