@@ -5,23 +5,23 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torchvision.transforms as transforms
-from torch.autograd import Variable
-from torch.utils.data import DataLoader
+# import torchvision.transforms as transforms
 from torchvision import datasets
 from torchvision.utils import save_image
+# for custom dataloader
+# from torch.utils.data import DataLoader, Dataset
 
 os.makedirs('cartoon_images', exist_ok=True)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--n_epochs', type=int, default=200, help='number of epochs of training (default 200)')
+parser.add_argument('--n_epochs', type=int, default=64, help='number of epochs of training (default 64)')
 parser.add_argument('--batch_size', type=int, default=64, help='size of the batches (default 64)')
 parser.add_argument('--lr', type=float, default=0.0002, help='adam: learning rate (default 0.0002)')
 parser.add_argument('--b1', type=float, default=0.5, help='adam: decay of first order momentum of gradient (default 0.5)')
 parser.add_argument('--b2', type=float, default=0.999, help='adam: decay of first order momentum of gradient (default 0.999)')
 parser.add_argument('--n_cpu', type=int, default=8, help='number of cpu threads to use during batch generation (default 8)')
 parser.add_argument('--latent_dim', type=int, default=100, help='dimensionality of the latent space (default 100)')
-parser.add_argument('--img_size', type=int, default=28, help='size of each image dimension (default 28)')
+parser.add_argument('--img_size', type=int, default=96, help='size of each image dimension (default 96)')
 parser.add_argument('--channels', type=int, default=1, help='number of image channels (default 1)')
 parser.add_argument('--sample_interval', type=int, default=400, help='interval between image samples (default 400)')
 opt = parser.parse_args()
@@ -88,14 +88,14 @@ if cuda:
     adversarial_loss.cuda()
 
 # Configure data loader
-os.makedirs('./data/mnist', exist_ok=True)
+'''os.makedirs('./data/mnist', exist_ok=True)
 dataloader = torch.utils.data.DataLoader(
     datasets.MNIST('./data/mnist', train=True, download=True,
                    transform=transforms.Compose([
                        transforms.ToTensor(),
                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
                    ])),
-    batch_size=opt.batch_size, shuffle=True)
+    batch_size=opt.batch_size, shuffle=True)'''
 
 # Optimizers
 optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
