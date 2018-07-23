@@ -11,7 +11,7 @@ from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.utils import save_image
 
-os.makedirs('images', exist_ok=True)
+os.makedirs('cartoon_images', exist_ok=True)
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--n_epochs', type=int, default=200, help='number of epochs of training (default 200)')
@@ -23,14 +23,14 @@ parser.add_argument('--n_cpu', type=int, default=8, help='number of cpu threads 
 parser.add_argument('--latent_dim', type=int, default=100, help='dimensionality of the latent space (default 100)')
 parser.add_argument('--img_size', type=int, default=28, help='size of each image dimension (default 28)')
 parser.add_argument('--channels', type=int, default=1, help='number of image channels (default 1)')
-parser.add_argument('--sample_interval', type=int, default=400, help='interval betwen image samples (default 400)')
+parser.add_argument('--sample_interval', type=int, default=400, help='interval between image samples (default 400)')
 opt = parser.parse_args()
 print(opt)
 
 img_shape = (opt.channels, opt.img_size, opt.img_size)
 
 cuda = True if torch.cuda.is_available() else False
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:0" if cuda else "cpu")
 class Generator(nn.Module):
     def __init__(self):
         super(Generator, self).__init__()
