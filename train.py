@@ -1,7 +1,6 @@
 import argparse
 import math
 import os
-# update
 import numpy as np
 import torch
 import torch.nn as nn
