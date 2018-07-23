@@ -30,7 +30,7 @@ print(opt)
 img_shape = (opt.channels, opt.img_size, opt.img_size)
 
 cuda = True if torch.cuda.is_available() else False
-
+device = 'cuda' if cuda else 'cpu'
 class Generator(nn.Module):
     def __init__(self):
         super(Generator, self).__init__()
