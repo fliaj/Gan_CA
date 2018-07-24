@@ -1,6 +1,7 @@
 from torch.utils.data import DataLoader, Dataset
 import torchvision.transforms as transforms
 from PIL import Image
+import matplotlib.pyplot as plt
 import glob
 # the cartoon images' path is ./data/data_f/
 # use PIL to read jpg fils
@@ -24,3 +25,7 @@ class CartoonDataset(Dataset):
         return count
 
 if __name__ == '__main__':
+    g = CartoonDataset()
+    img = g.__getitem__(1)
+    img = img * 255
+    plt.imshow(img)
