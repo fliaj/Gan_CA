@@ -15,7 +15,7 @@ class CartoonDataset(Dataset):
         self.path = path
         self.transforms = transforms
     def __getitem__(self, index):
-        img = Image.open(path+iglist[index])
+        img = Image.open(self.path+iglist[index])
 
         if self.transforms is not None:
             img = self.transforms(img)
