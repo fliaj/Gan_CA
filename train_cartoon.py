@@ -8,8 +8,9 @@ import torch.nn.functional as F
 # import torchvision.transforms as transforms
 from torchvision import datasets
 from torchvision.utils import save_image
+from customDatasets import CartoonDatasets
 # for custom dataloader
-# from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import DataLoader, Dataset
 
 os.makedirs('cartoon_images', exist_ok=True)
 
@@ -96,7 +97,7 @@ dataloader = torch.utils.data.DataLoader(
                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
                    ])),
     batch_size=opt.batch_size, shuffle=True)'''
-
+dataloader = DataLoader(CartoonDatasets(),batch_size = opt.batch_size, shuffle = True)
 # Optimizers
 optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
 optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
@@ -126,9 +127,9 @@ for epoch in range(opt.n_epochs):
 
         # Generate a batch of images
         gen_imgs = generator(z)
-
+        score = discriminator(gen_imgs)
         # Loss measures generator's ability to fool the discriminator
-        g_loss = adversarial_loss(discriminator(gen_imgs), valid)
+        g_loss = adversarial_loss(score, valid)
 
         g_loss.backward()
         optimizer_G.step()
@@ -138,17 +139,17 @@ for epoch in range(opt.n_epochs):
         # ---------------------
 
         optimizer_D.zero_grad()
-
+        real_score= discriminator(real_imgs)
         # Measure discriminator's ability to classify real from generated samples
-        real_loss = adversarial_loss(discriminator(real_imgs), valid)
+        real_loss = adversarial_loss(real_score, valid)
         fake_loss = adversarial_loss(discriminator(gen_imgs.detach()), fake)
         d_loss = (real_loss + fake_loss) / 2
 
         d_loss.backward()
         optimizer_D.step()
-
-        print ("[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f]" % (epoch, opt.n_epochs, i, len(dataloader),
-                                                            d_loss.item(), g_loss.item()))
+        if i % 50 == 0:
+            print ("[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f] [D(G(z)): %.2f] [D(x): %.2f]" % (epoch, opt.n_epochs, i, len(dataloader),
+                                                            d_loss.item(), g_loss.item(),score.mean().item(), real_score.mean().item()))
 
         batches_done = epoch * len(dataloader) + i
         if batches_done % opt.sample_interval == 0:
