@@ -27,7 +27,7 @@ class CartoonDataset(Dataset):
 
 if __name__ == '__main__':
     g = CartoonDataset()
-    img = g.__getitem__(1)
+    img = g.__getitem__(1)[0]
     img = img * 255
     # plt.imshow(transforms.ToPILImage(img))
     save_image(img, 'image_test.png', normalize=True)
