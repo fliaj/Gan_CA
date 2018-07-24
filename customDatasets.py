@@ -28,4 +28,4 @@ if __name__ == '__main__':
     g = CartoonDataset()
     img = g.__getitem__(1)
     img = img * 255
-    plt.imshow(img)
+    plt.imshow(transforms.ToPILImage(img))
