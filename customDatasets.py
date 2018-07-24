@@ -7,7 +7,7 @@ import glob
 # use PIL to read jpg fils
 class CartoonDataset(Dataset):
     def __init__(self, path = './data/data_f/',
-                    transfoms = transforms.Compose([
+                    transforms = transforms.Compose([
                         transforms.ToTensor(), # range [0, 255] -> [0.0,1.0]
                     ]),
                 ):
