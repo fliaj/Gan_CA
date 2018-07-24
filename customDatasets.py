@@ -12,10 +12,10 @@ class CartoonDataset(Dataset):
                     ]),
                 ):
         self.iglist = glob.glob(path+'*jpg')
-        self.path = path
+        # self.path = path
         self.transforms = transforms
     def __getitem__(self, index):
-        img = Image.open(self.path+self.iglist[index])
+        img = Image.open(self.iglist[index])
 
         if self.transforms is not None:
             img = self.transforms(img)
