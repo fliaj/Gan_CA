@@ -148,7 +148,7 @@ for epoch in range(opt.n_epochs):
         d_loss.backward()
         optimizer_D.step()
         if i % 50 == 0:
-            print ("[Epoch %d/%d] [Batch %d/%d] [D loss: %f] [G loss: %f] [D(G(z)): %.2f] [D(x): %.2f]" % (epoch, opt.n_epochs, i, len(dataloader),
+            print ("[Epoch %d/%d] [Batch %d/%d] [D loss: %.2f] [G loss: %.2f] [D(G(z)): %.2f] [D(x): %.2f]" % (epoch, opt.n_epochs, i, len(dataloader),
                                                             d_loss.item(), g_loss.item(),score.mean().item(), real_score.mean().item()))
 
         batches_done = epoch * len(dataloader) + i
