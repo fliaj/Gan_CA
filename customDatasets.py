@@ -23,7 +23,7 @@ class CartoonDataset(Dataset):
         label = self.iglist[index] # dummy variable
         return (img, label)
     def __len__(self):
-        return count
+        return len(self.iglist)
 
 if __name__ == '__main__':
     g = CartoonDataset()
