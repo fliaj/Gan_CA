@@ -8,13 +8,13 @@ from torchvision.utils import save_image
 # use PIL to read jpg fils
 class CartoonDataset(Dataset):
     def __init__(self, path = './data/data_f/',
-                    transforms = transforms.Compose([
+                    transform = transforms.Compose([
                         transforms.ToTensor(), # range [0, 255] -> [0.0,1.0]
                     ]),
                 ):
         self.iglist = glob.glob(path+'*jpg')
         # self.path = path
-        self.transforms = transforms
+        self.transforms = transform
     def __getitem__(self, index):
         img = Image.open(self.iglist[index])
 
