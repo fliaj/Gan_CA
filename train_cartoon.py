@@ -8,7 +8,7 @@ import torch.nn.functional as F
 # import torchvision.transforms as transforms
 from torchvision import datasets
 from torchvision.utils import save_image
-from customDatasets import CartoonDatasets
+from customDatasets import CartoonDataset
 # for custom dataloader
 from torch.utils.data import DataLoader, Dataset
 
@@ -97,7 +97,7 @@ dataloader = torch.utils.data.DataLoader(
                        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
                    ])),
     batch_size=opt.batch_size, shuffle=True)'''
-dataloader = DataLoader(CartoonDatasets(),batch_size = opt.batch_size, shuffle = True)
+dataloader = DataLoader(CartoonDataset(),batch_size = opt.batch_size, shuffle = True)
 # Optimizers
 optimizer_G = torch.optim.Adam(generator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
 optimizer_D = torch.optim.Adam(discriminator.parameters(), lr=opt.lr, betas=(opt.b1, opt.b2))
